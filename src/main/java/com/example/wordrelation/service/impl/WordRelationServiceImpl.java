@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,12 @@ public class WordRelationServiceImpl implements WordRelationService {
 
     @Override
     public WordRelation addNewWordRelation(WordRelation relation) {
+        List<WordRelation> list = wordRelationRepository
+                .findByFirstWordEqualsIgnoreCaseAndSecondWordEqualsIgnoreCase(relation.getFirstWord(), relation.getSecondWord());
+        if (!list.isEmpty()) {
+            //throw new customException();
+        }
+
         // Assume null check is done by validation
         relation.setFirstWord(relation.getFirstWord().toLowerCase().trim());
         relation.setSecondWord(relation.getSecondWord().toLowerCase().trim());

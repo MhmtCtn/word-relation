@@ -8,4 +8,6 @@ import java.util.List;
 public interface WordRelationRepository extends JpaRepository<WordRelation, Long> {
 
     List<WordRelation> findByRelationEqualsIgnoreCase(String relation);
+
+    List<WordRelation> findByFirstWordEqualsIgnoreCaseAndSecondWordEqualsIgnoreCase(String first, String second);
 }
