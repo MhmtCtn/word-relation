@@ -21,8 +21,9 @@ mvn spring-boot:run -Drun.arguments="spring.profiles.active=test"
 Here are the endpoints which can be called:
 
 ```
-http://localhost:8080/word-relation (POST)
-http://localhost:8080/word-relation (GET)
+http://localhost:8080/api/v1/word-relations (POST)
+http://localhost:8080/api/v1/word-relations/{includeInverse} (GET)
+http://localhost:8080/api/v1/word-relations//{relation} (GET)
 ```
 
 ### To view Swagger 2 API docs
