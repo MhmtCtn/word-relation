@@ -28,7 +28,7 @@ public class WordRelationServiceImpl implements WordRelationService {
         List<WordRelation> list = wordRelationRepository
                 .findByFirstWordEqualsIgnoreCaseAndSecondWordEqualsIgnoreCase(relation.getFirstWord(), relation.getSecondWord());
         if (!list.isEmpty()) {
-            //throw new customException();
+            throw new IllegalArgumentException("A relation with same words can not be created!");
         }
 
         // Assume null check is done by validation

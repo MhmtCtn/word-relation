@@ -35,6 +35,7 @@ public class WordRelation {
     private String secondWord;
 
     @NotBlank(message = "Relation must not be empty!")
+    @Pattern(regexp = "^[A-Za-z]*$", message = "Only characters from A to Z(both lower and uppercase) are allowed")
     @Enumerated(EnumType.STRING)
     private Relation relation;
 }
