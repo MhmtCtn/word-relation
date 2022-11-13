@@ -9,4 +9,6 @@ public interface WordRelationService {
     WordRelation addNewWordRelation(WordRelation relation);
 
     List<WordRelation> findAllRelations();
+
+    List<WordRelation> findByRelation(String relation);
 }

@@ -25,4 +25,9 @@ public class WordRelationServiceImpl implements WordRelationService {
     public List<WordRelation> findAllRelations() {
         return wordRelationRepository.findAll();
     }
+
+    @Override
+    public List<WordRelation> findByRelation(String relation) {
+        return wordRelationRepository.findByRelationEqualsIgnoreCase(relation);
+    }
 }
