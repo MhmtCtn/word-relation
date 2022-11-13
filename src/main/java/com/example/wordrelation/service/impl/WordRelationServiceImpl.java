@@ -24,6 +24,9 @@ public class WordRelationServiceImpl implements WordRelationService {
 
     @Override
     public WordRelation addNewWordRelation(WordRelation relation) {
+        // Assume null check is done by validation
+        relation.setFirstWord(relation.getFirstWord().toLowerCase().trim());
+        relation.setSecondWord(relation.getSecondWord().toLowerCase().trim());
         return wordRelationRepository.save(relation);
     }
 
