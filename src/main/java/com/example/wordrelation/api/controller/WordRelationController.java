@@ -1,6 +1,7 @@
 package com.example.wordrelation.api.controller;
 
 import com.example.wordrelation.model.WordRelation;
+import com.example.wordrelation.model.WordRelationInverseResponseDto;
 import com.example.wordrelation.model.WordRelationRequestDto;
 import com.example.wordrelation.service.WordRelationService;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +34,16 @@ public class WordRelationController {
         wordRelationService.addNewWordRelation(relation);
     }
 
-    @GetMapping
-    public ResponseEntity<List<WordRelation>> listAllRelations() {
-        List<WordRelation> list = wordRelationService.findAllRelations();
+    @GetMapping("/{includeInverse}")
+    public ResponseEntity<List<WordRelationInverseResponseDto>> listAllRelations(
+            @PathVariable(name = "includeInverse", required = false) boolean includeInverse) {
+        List<WordRelationInverseResponseDto> list = wordRelationService.findAllRelations(includeInverse);
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{relation}")
-    public ResponseEntity<List<WordRelation>> listRelations(@PathVariable("relation") String relation) {
+    public ResponseEntity<List<WordRelation>> listRelations(
+            @PathVariable("relation") String relation) {
         List<WordRelation> list = wordRelationService.findByRelation(relation);
         return ResponseEntity.ok(list);
     }
