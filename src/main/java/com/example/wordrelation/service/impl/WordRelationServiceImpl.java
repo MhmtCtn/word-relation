@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -18,5 +19,10 @@ public class WordRelationServiceImpl implements WordRelationService {
     @Override
     public WordRelation addNewWordRelation(WordRelation relation) {
         return wordRelationRepository.save(relation);
+    }
+
+    @Override
+    public List<WordRelation> findAllRelations() {
+        return wordRelationRepository.findAll();
     }
 }
