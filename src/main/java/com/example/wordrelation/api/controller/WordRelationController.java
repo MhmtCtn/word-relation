@@ -48,4 +48,10 @@ public class WordRelationController {
         List<WordRelation> list = wordRelationService.findByRelation(relation);
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping("relationStr/{firstWord}/{secondWord}") // Is not well designed
+    public ResponseEntity<String> relation(@PathVariable("firstWord") String firstWord,
+                                           @PathVariable("secondWord") String secondWord) {
+        return ResponseEntity.ok(wordRelationService.createRelationStr(firstWord, secondWord));
+    }
 }

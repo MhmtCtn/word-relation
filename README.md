@@ -23,7 +23,8 @@ Here are the endpoints which can be called:
 ```
 http://localhost:8080/api/v1/word-relations (POST)
 http://localhost:8080/api/v1/word-relations/{includeInverse} (GET)
-http://localhost:8080/api/v1/word-relations//{relation} (GET)
+http://localhost:8080/api/v1/word-relations/{relation} (GET)
+http://localhost:8080/api/v1/word-relations/relationStr/{firstWord}/{secondWord} (GET) // Needs work
 ```
 
 ### To view Swagger 2 API docs

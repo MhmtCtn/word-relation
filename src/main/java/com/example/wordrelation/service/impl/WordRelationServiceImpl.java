@@ -2,6 +2,7 @@ package com.example.wordrelation.service.impl;
 
 import com.example.wordrelation.model.WordRelation;
 import com.example.wordrelation.model.WordRelationInverseResponseDto;
+import com.example.wordrelation.model.enums.Relation;
 import com.example.wordrelation.model.enums.YesNo;
 import com.example.wordrelation.repository.WordRelationRepository;
 import com.example.wordrelation.service.WordRelationService;
@@ -65,6 +66,18 @@ public class WordRelationServiceImpl implements WordRelationService {
 
     @Override
     public List<WordRelation> findByRelation(String relation) {
-        return wordRelationRepository.findByRelationEqualsIgnoreCase(relation);
+        return wordRelationRepository.findByRelationEquals(Relation.valueOf(relation));
+    }
+
+    @Override
+    public String createRelationStr(String first, String second) {
+        List<WordRelation> synonymRel = wordRelationRepository
+                .findByFirstWordEqualsIgnoreCaseAndRelationEquals(first, Relation.SYNONYM);
+        StringBuilder sb = new StringBuilder(first);
+        if (!synonymRel.isEmpty()) {
+            sb.append(first).append(" ===(SYNONYM)==> ").append(synonymRel.get(0).getSecondWord());
+        }
+        sb.append(" ===(RELATED)==> ").append(second);
+        return sb.toString();
     }
 }

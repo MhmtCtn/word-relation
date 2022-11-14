@@ -12,4 +12,6 @@ public interface WordRelationService {
     List<WordRelationInverseResponseDto> findAllRelations(boolean includeInverse);
 
     List<WordRelation> findByRelation(String relation);
+
+    String createRelationStr(String first, String second);
 }
