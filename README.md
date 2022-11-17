@@ -18,7 +18,9 @@ mvn spring-boot:run -Drun.arguments="spring.profiles.active=test"
 
 ## About the Service
 
-Here are the endpoints which can be called:
+- Run the application and go on http://localhost:8080/
+
+Here are urls to call realted endpoints:
 
 | Request | Route                                   | Body                                                                                  | RequestParam/PathVariable | Açıklama                                                                     |   
 |:--------|:----------------------------------------|:--------------------------------------------------------------------------------------|:--------------------------|:-----------------------------------------------------------------------------|
