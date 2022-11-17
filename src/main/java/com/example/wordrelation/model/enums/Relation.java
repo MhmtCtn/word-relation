@@ -12,4 +12,13 @@ public enum Relation {
     public String getValue() {
         return value;
     }
+
+    public static Relation findByValue(String value) {
+        for (Relation rel : Relation.values()) {
+            if (value.equals(rel.getValue())) {
+                return rel;
+            }
+        }
+        return null;
+    }
 }
