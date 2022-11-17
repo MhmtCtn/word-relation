@@ -20,12 +20,12 @@ mvn spring-boot:run -Drun.arguments="spring.profiles.active=test"
 
 Here are the endpoints which can be called:
 
-```
-http://localhost:8080/api/v1/word-relations (POST)
-http://localhost:8080/api/v1/word-relations/{includeInverse} (GET)
-http://localhost:8080/api/v1/word-relations/{relation} (GET)
-http://localhost:8080/api/v1/word-relations/relationStr/{firstWord}/{secondWord} (GET) // Needs work
-```
+| Request | Route                                   | Body                                                                                  | RequestParam/PathVariable | Açıklama                                                                     |   
+|:--------|:----------------------------------------|:--------------------------------------------------------------------------------------|:--------------------------|:-----------------------------------------------------------------------------|
+| POST    | /api/v1/word-relations                  | { <br>"firstWord": "road",<br>"secondWord": "avenue",<br> "relation": "related"<br/>} |                           | Adds a new relation record                                                   |
+| GET     | /api/v1/word-relations/{includeInverse} |                                                                                       | includeInverse            | Lists all relations                                                          |
+| GET     | /api/v1/word-relations                  |                                                                                       | relation                  | Lists by relation                                                            |
+| GET     | /api/v1/word-relations/relationStr      |                                                                                       | firstWord, secondWord     | Creates a relation string based on a relation between first and second word. |
 
 ### To view Swagger 2 API docs
 

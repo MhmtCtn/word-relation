@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +38,7 @@ public class WordRelationController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addRelation(@RequestBody @Valid WordRelationRequestDto dto) {
         WordRelation relation = modelMapper.map(dto, WordRelation.class);
-        relation.setRelation(Relation.findByValue(dto.getRelation()));
+        relation.setRelation(Relation.from(dto.getRelation()));
         wordRelationService.addNewWordRelation(relation);
     }
 
@@ -50,17 +51,17 @@ public class WordRelationController {
     }
 
     @ApiOperation(value = "List Relations by relation keyword")
-    @GetMapping("/{relation}")
+    @GetMapping()
     public ResponseEntity<List<WordRelation>> listRelations(
-            @PathVariable("relation") String relation) {
+            @RequestParam("relation") String relation) {
         List<WordRelation> list = wordRelationService.findByRelation(relation);
         return ResponseEntity.ok(list);
     }
 
     @ApiOperation(value = "Get a string of relations between related words")
-    @GetMapping("relationStr/{firstWord}/{secondWord}") // Is not well designed
-    public ResponseEntity<String> relation(@PathVariable("firstWord") String firstWord,
-                                           @PathVariable("secondWord") String secondWord) {
+    @GetMapping("relationStr")
+    public ResponseEntity<String> relation(@RequestParam("firstWord") String firstWord,
+                                           @RequestParam("secondWord") String secondWord) {
         return ResponseEntity.ok(wordRelationService.createRelationStr(firstWord, secondWord));
     }
 }

@@ -10,7 +10,9 @@ public interface WordRelationRepository extends JpaRepository<WordRelation, Long
 
     List<WordRelation> findByRelationEquals(Relation relation);
 
-    List<WordRelation> findByFirstWordEqualsIgnoreCaseAndSecondWordEqualsIgnoreCase(String first, String second);
+    List<WordRelation> findByFirstWordEqualsIgnoreCase(String first);
 
-    List<WordRelation> findByFirstWordEqualsIgnoreCaseAndRelationEquals(String first, Relation relation);
+    List<WordRelation> findByFirstWordEqualsAndSecondWordEquals(String first, String second);
+
+    List<WordRelation> findByFirstWordEqualsAndRelationEquals(String first, Relation relation);
 }
