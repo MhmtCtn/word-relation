@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class WordRelationServiceImpl implements WordRelationService {
 
-    private WordRelationRepository wordRelationRepository;
+    private final WordRelationRepository wordRelationRepository;
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     @Override
     public WordRelation addNewWordRelation(WordRelation relation) {

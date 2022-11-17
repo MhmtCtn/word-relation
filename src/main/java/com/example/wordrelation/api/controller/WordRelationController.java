@@ -3,7 +3,10 @@ package com.example.wordrelation.api.controller;
 import com.example.wordrelation.model.WordRelation;
 import com.example.wordrelation.model.WordRelationInverseResponseDto;
 import com.example.wordrelation.model.WordRelationRequestDto;
+import com.example.wordrelation.model.enums.Relation;
 import com.example.wordrelation.service.WordRelationService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,19 +25,23 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/word-relations")
 @RequiredArgsConstructor
+@Api(value = "Word-Relations API Documentation")
 public class WordRelationController {
 
-    private WordRelationService wordRelationService;
+    private final WordRelationService wordRelationService;
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
+    @ApiOperation(value = "Add new relation")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addRelation(@RequestBody @Valid WordRelationRequestDto dto) {
         WordRelation relation = modelMapper.map(dto, WordRelation.class);
+        relation.setRelation(Relation.findByValue(dto.getRelation()));
         wordRelationService.addNewWordRelation(relation);
     }
 
+    @ApiOperation(value = "List All Relations")
     @GetMapping("/{includeInverse}")
     public ResponseEntity<List<WordRelationInverseResponseDto>> listAllRelations(
             @PathVariable(name = "includeInverse", required = false) boolean includeInverse) {
@@ -42,6 +49,7 @@ public class WordRelationController {
         return ResponseEntity.ok(list);
     }
 
+    @ApiOperation(value = "List Relations by relation keyword")
     @GetMapping("/{relation}")
     public ResponseEntity<List<WordRelation>> listRelations(
             @PathVariable("relation") String relation) {
@@ -49,6 +57,7 @@ public class WordRelationController {
         return ResponseEntity.ok(list);
     }
 
+    @ApiOperation(value = "Get a string of relations between related words")
     @GetMapping("relationStr/{firstWord}/{secondWord}") // Is not well designed
     public ResponseEntity<String> relation(@PathVariable("firstWord") String firstWord,
                                            @PathVariable("secondWord") String secondWord) {
