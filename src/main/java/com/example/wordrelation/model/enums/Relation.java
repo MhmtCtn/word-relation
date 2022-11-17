@@ -1,24 +1,14 @@
 package com.example.wordrelation.model.enums;
 
 public enum Relation {
-    SYNONYM("synonym"), ANTONYM("antonym"), RELATED("related");
+    SYNONYM, ANTONYM, RELATED;
 
-    private String value;
-
-    Relation(String value) {
-        this.value = value;
+    public static Relation from(String value) {
+        return value != null ? Relation.valueOf(value.toUpperCase()) : null;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public static Relation findByValue(String value) {
-        for (Relation rel : Relation.values()) {
-            if (value.equals(rel.getValue())) {
-                return rel;
-            }
-        }
-        return null;
+    @Override
+    public String toString() {
+        return name().toLowerCase();
     }
 }

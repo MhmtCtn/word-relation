@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +26,9 @@ public class WordRelationServiceImpl implements WordRelationService {
     @Override
     public WordRelation addNewWordRelation(WordRelation relation) {
         List<WordRelation> list = wordRelationRepository
-                .findByFirstWordEqualsIgnoreCaseAndSecondWordEqualsIgnoreCase(relation.getFirstWord(), relation.getSecondWord());
+                .findByFirstWordEqualsAndSecondWordEquals(relation.getFirstWord(), relation.getSecondWord());
         List<WordRelation> listForReversedOrderOfWords = wordRelationRepository
-                .findByFirstWordEqualsIgnoreCaseAndSecondWordEqualsIgnoreCase(relation.getSecondWord(), relation.getFirstWord());
+                .findByFirstWordEqualsAndSecondWordEquals(relation.getSecondWord(), relation.getFirstWord());
         if (!list.isEmpty() || !listForReversedOrderOfWords.isEmpty()) {
             throw new IllegalArgumentException("A relation with same words can not be created!");
         }
@@ -66,18 +65,26 @@ public class WordRelationServiceImpl implements WordRelationService {
 
     @Override
     public List<WordRelation> findByRelation(String relation) {
-        return wordRelationRepository.findByRelationEquals(Relation.valueOf(relation));
+        return wordRelationRepository.findByRelationEquals(Relation.from(relation));
     }
 
     @Override
     public String createRelationStr(String first, String second) {
         List<WordRelation> synonymRel = wordRelationRepository
-                .findByFirstWordEqualsIgnoreCaseAndRelationEquals(first, Relation.SYNONYM);
+                .findByFirstWordEqualsAndRelationEquals(first, Relation.SYNONYM);
         StringBuilder sb = new StringBuilder(first);
-        if (!synonymRel.isEmpty()) {
-            sb.append(first).append(" ===(SYNONYM)==> ").append(synonymRel.get(0).getSecondWord());
+        if (!synonymRel.isEmpty() && second.equals(synonymRel.get(0).getSecondWord())) {
+            sb.append(" ===(SYNONYM)==> ").append(second);
         }
-        sb.append(" ===(RELATED)==> ").append(second);
+
+        List<WordRelation> relationList = wordRelationRepository.findByFirstWordEqualsIgnoreCase(first);
+        if (!relationList.isEmpty()) {
+            relationList.stream().filter(p -> p.getRelation().compareTo(Relation.SYNONYM) != 0).forEach(p ->
+            {
+                sb.append(" ===(").append(p.getRelation().name()).append(")==> ").append(p.getSecondWord());
+            });
+        }
+
         return sb.toString();
     }
 }
